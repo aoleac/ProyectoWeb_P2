@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block header %}
+{% include 'header.html' %}
+{% endblock %}
+{% block main %}
+{% load static %}
+<div class="container-fluid" style="margin-top: 3rem;">
+    <div class="card">
+        <div class="card-header bg-success text-light ">
+            <div class="row">
+                <div class="card-title col-md-8 mt-2">
+                    <h2 class="font-weight-bold">
+                        Consulta de signoetas del paciente 
+                    </h2>
+                </div>
+                <div class="col-md-4">
+                    <div class="float-right m-3">
+                        <a class="btn btn-primary btn-sm"
+                        href="{% url 'atencion:registrar_toSigno' %}?id_signo={{signos.signoeta.id}}">Nueva Toma de SignoVital</a>
+                        {% comment %} <a class="btn btn-primary btn-sm" href="{% url 'atencion:detalle' %}?id_paciente={{signoetas.paciente.id}}">Detalle de signoeta</a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'atencion:toma' %}">Toma de Signos</a> {% endcomment %}
+                        <a class="btn btn-primary btn-sm" href="{% url 'base:paciente' %}">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body table-responsive">
+            
+            <div class="row pt-2">
+                <div class="col">
+                    <table class="table table-striped table-hover table-sm  ">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center">Receta</th>
+                                <th class="text-center">Signo Vital</th>
+                                <th class="text-center">Valor</th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="tabla">
+                            {% for signo in signos%}
+                            <tr>
+                                <td class="text-center">{{ signo.receta }}</td>
+                                <td class="text-center">{{ signo.signovital.descripcion }}</td>
+                                <td class="text-center">{{ signo.valor }} {{signo.signovital.medida}}</td>
+                            </tr>
+                            {% empty %}
+                            <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+                                <strong>Mensaje del Sistema!</strong> No existen Signos Vitales del Paciente registrados.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
